@@ -210,6 +210,7 @@ Bomberman.Map.prototype._isCellEmpty = function(position){
 	var stones = this.getStones();
 	var bombs = this.getBombs();
 	var boxes = this.getBoxes();
+	var players = this.getPlayers();
 
 	for (var i = 0; i < stones.length; i++) {
 		var stonePos = stones[i].getPosition();
@@ -224,6 +225,11 @@ Bomberman.Map.prototype._isCellEmpty = function(position){
 	for (var i = 0; i < boxes.length; i++) {
 		var boxPos = boxes[i].getPosition();
 		if(boxPos.x == position.x && boxPos.y == position.y) return false;
+	}
+
+	for (var i = 0; i < players.length; i++) {
+		var playerPos = players[i].getPosition();
+		if(playerPos.x == position.x && playerPos.y == position.y) return false;
 	}
 
 	return true;

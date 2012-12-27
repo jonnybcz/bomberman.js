@@ -35,7 +35,6 @@ Bomberman.Player.Human.prototype._move = function(e, elm){
       			this._putBomb();
 	      		break;
 	   default:
-	   	console.log(e.keyCode);
 		break;
 	}
 }
