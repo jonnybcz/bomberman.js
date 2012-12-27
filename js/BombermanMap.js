@@ -104,8 +104,8 @@ Bomberman.Map.prototype._buildStones = function(){
 	// right wall
 	for (var i = 0; i < columns; i++) this._stones.push(new Bomberman.Stone({x: (this._width - this._cellSize), y: (this._cellSize * i)}, this._cellSize));
 	// buildStones rows
-	for (var i = 1; i < this._rows; i++) {
-		for (var j = 1; j < this._columns; j++) {
+	for (var i = 1; i < this._columns; i++) {
+		for (var j = 1; j < this._rows; j++) {
 			if(i % 2 && j % 2) this._stones.push(new Bomberman.Stone({x: (i+1) * this._cellSize, y: (j+1) * this._cellSize}, this._cellSize));
 		}
 	}	
