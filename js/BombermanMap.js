@@ -118,8 +118,8 @@ Bomberman.Map.prototype._buildBoxes = function(){
 	var cellSize = this._cellSize;
 	var chancePutBox = 9; // 0 / 10 , cim vetsi cislo tim vetsi sance na polozeni bednicky
 
-	for (var i = 1; i <= rows; i++) {
-		for (var j = 1; j <= columns; j++) {
+	for (var i = 1; i <= columns; i++) {
+		for (var j = 1; j <= rows; j++) {
 			var pos = {x: i * cellSize, y: j * cellSize};
 			if(this._isCellEmpty(pos) && Math.random() * (10 - 0) + 0 < chancePutBox) boxes.push(new Bomberman.Box(pos, cellSize));	
 		}
