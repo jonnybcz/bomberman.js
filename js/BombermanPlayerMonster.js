@@ -13,8 +13,7 @@ Bomberman.Player.Monster.prototype.$constructor = function(nick, map){
 }
 
 Bomberman.Player.Monster.prototype.generateMove = function(){
-	var map = this._map;
-	map.canIMoveThere(this._getDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1), this);
+	this._makeStep(this._getDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1));
 }
 
 Bomberman.Player.Monster.prototype._getDirection = function(number){
@@ -24,7 +23,7 @@ Bomberman.Player.Monster.prototype._getDirection = function(number){
 		case 2:
 			return "right";
 		case 3:
-			return "top";
+			return "up";
 		case 4:
 			return "down";
 	}

@@ -144,7 +144,7 @@ Bomberman.Map.prototype._buildRespawns = function(){
 	respawns.push(new Bomberman.Respawn({x: this._cellSize, y: this._cellSize}, this._cellSize));
 	for (var i = 1; i < columns; i++) {
 		for (var j = 1; j < rows; j++) {
-			if(!(i % 3) && !(j % 3)) respawns.push(new Bomberman.Respawn({x: (i+1) * this._cellSize, y: (j+1) * this._cellSize}, this._cellSize));
+			if(!(i % 3) && !(j % 3)) respawns.push(new Bomberman.Respawn({x: i * this._cellSize, y: j * this._cellSize}, this._cellSize));
 		}
 	}	
 
@@ -199,7 +199,7 @@ Bomberman.Map.prototype.canIMoveThere = function(direction, player){
 		      	
 			break;
 
-		case "top":
+		case "up":
 			var nPos = {x: pos.x, y: pos.y - this._cellSize};
 		   	
 			if(this._isCellEmpty(nPos)) player.setPosition(nPos);
