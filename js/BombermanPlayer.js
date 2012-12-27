@@ -11,7 +11,6 @@ Bomberman.Player.prototype.$constructor = function(nick, map){
 	this._nick = nick;
 	this._map = map;
 	this._position = {x: 0, y: 0}
-	this._ifMoveCallBack = null; // callback, kdyz se hrac pohne	
 	
 	this._hasBomb = 1;
 	this._rangeOfBomb = 3;
@@ -42,10 +41,6 @@ Bomberman.Player.prototype.setPosition = function(position){
 
 Bomberman.Player.prototype.getPosition = function(){
 	return this._position;
-}
-
-Bomberman.Player.prototype.ifMoveCallBack = function(f){
-	this._ifMoveCallBack = f; // funkce v Bomberman.Map.canIMoveThere();
 }
 
 Bomberman.Player.prototype._move = function(e, elm){
