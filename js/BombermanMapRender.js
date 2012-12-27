@@ -19,7 +19,6 @@ Bomberman.Map.Render.prototype.$constructor = function(map){
 // vykresli canvas
 Bomberman.Map.Render.prototype.canvas = function(){
 	this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.width);
-	//this._insertBombsToMap();
 
 	this._insertToMap(this._map.getStones());
 	this._insertToMap(this._map.getBoxes());

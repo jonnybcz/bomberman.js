@@ -37,6 +37,7 @@
 	<script src="js/BombermanPlayerBomb.js"></script>
 	<script src="js/BombermanPlayerBombExplosion.js"></script>
 	<script src="js/BombermanPlayerHuman.js"></script>
+	<script src="js/BombermanPlayerMonster.js"></script>
 
 	
 	<script>
@@ -46,8 +47,10 @@
 		//var map = new Bomberman.Map(canvas, 144, 144, 16);
 		var map = new Bomberman.Map(canvas, 60*17, 540, 60);
 		var player = new Bomberman.Player.Human("nick", map);
+		var monster1 = new Bomberman.Player.Monster("Dejo", map);
 
 		map.addPlayer(player);
+		map.addPlayer(monster1);
 		
 
 		window.setInterval(function(){map.refresh()}, 100);

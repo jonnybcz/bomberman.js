@@ -26,7 +26,6 @@ Bomberman.Map.prototype.$constructor = function(canvas, width, height, cellSize)
 	
 	this._buildStones();
 	this._buildBoxes();
-	console.log(this._stones);	
 }
 
 Bomberman.Map.prototype.getCanvas = function(){
@@ -58,8 +57,14 @@ Bomberman.Map.prototype.getCellSize = function(){
 }
 
 Bomberman.Map.prototype.refresh = function(){
+	var players = this._players;
 	this._removeExplodedBombs();
 	this._removeExplosions();
+
+	for (var i = 0; i < players.length; i++) {
+		if(players[i] instanceof Bomberman.Player.Monster) players[i].generateMove();
+	}
+
 
 	var render = new Bomberman.Map.Render(this);
 	render.canvas();
