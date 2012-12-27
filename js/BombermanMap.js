@@ -20,12 +20,14 @@ Bomberman.Map.prototype.$constructor = function(canvas, width, height, cellSize)
 	this._bombs = [];
 	this._explosions = []; // tady se presouva po vybuchnuti bomba
 	this._players = [];
+	this._respawns = [];
 
 	this._canvas.width = width;
 	this._canvas.height = height;
 	
 	this._buildStones();
 	this._buildBoxes();
+	this._buildRespawns();
 }
 
 Bomberman.Map.prototype.getCanvas = function(){
@@ -38,6 +40,10 @@ Bomberman.Map.prototype.getStones = function(){
 
 Bomberman.Map.prototype.getPlayers = function(){
 	return this._players;
+}
+
+Bomberman.Map.prototype.getRespawns = function(){
+	return this._respawns;
 }
 
 Bomberman.Map.prototype.getBombs = function(){
@@ -64,7 +70,6 @@ Bomberman.Map.prototype.refresh = function(){
 	for (var i = 0; i < players.length; i++) {
 		if(players[i] instanceof Bomberman.Player.Monster) players[i].generateMove();
 	}
-
 
 	var render = new Bomberman.Map.Render(this);
 	render.canvas();
@@ -131,15 +136,29 @@ Bomberman.Map.prototype._buildBoxes = function(){
 	}
 }
 
+Bomberman.Map.prototype._buildRespawns = function(){
+	var respawns = this._respawns;
+	var columns = this._columns;
+	var rows = this._rows;
+
+	respawns.push(new Bomberman.Respawn({x: this._cellSize, y: this._cellSize}, this._cellSize));
+	for (var i = 1; i < columns; i++) {
+		for (var j = 1; j < rows; j++) {
+			if(!(i % 3) && !(j % 3)) respawns.push(new Bomberman.Respawn({x: (i+1) * this._cellSize, y: (j+1) * this._cellSize}, this._cellSize));
+		}
+	}	
+
+	respawns.reverse();
+}
+
 Bomberman.Map.prototype._removeBoxesAroundPlayer = function(playerPos){
 	var boxes = this._boxes;
 	var cellSize = this._cellSize;
 	var tmp = [];
-
+	console.log(playerPos);
 	for (var i = 0; i < boxes.length; i++) {
 		var boxPos = boxes[i].getPosition();
 
-		//if(playerPos.x == boxPos.x && playerPos.y == boxPos.y) tmp.push(i);
 		if(playerPos.x + (1 * cellSize) == boxPos.x && playerPos.y == boxPos.y) tmp.push(i);
 		if(playerPos.x - (1 * cellSize) == boxPos.x && playerPos.y == boxPos.y) tmp.push(i);
 		if(playerPos.x == boxPos.x && playerPos.y + (1 * cellSize) == boxPos.y) tmp.push(i);
@@ -154,10 +173,11 @@ Bomberman.Map.prototype._removeBoxesAroundPlayer = function(playerPos){
 }
 
 Bomberman.Map.prototype.addPlayer = function(player){
-	player.setPosition({x: this._cellSize, y: this._cellSize});
-	//player.setPosition({x: this._cellSize * 5, y: this._cellSize *5});
+	var respawns = this.getRespawns();
+	var respawnPos = respawns.pop().getPosition();
+	
+	player.setPosition(respawnPos);
 	this._players.push(player);
-
 	this._removeBoxesAroundPlayer(player.getPosition());
 }
 
@@ -233,8 +253,6 @@ Bomberman.Map.prototype._isCellEmpty = function(position){
 	}
 
 	return true;
-
-	// proiteruje vsechny hrace a zjisti jestli na danem policku nestoji
 
 	// proiteruje a udela pruniky pres vsechny kameny
 

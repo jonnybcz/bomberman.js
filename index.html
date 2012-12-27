@@ -31,6 +31,7 @@
 
 	<script src="js/BombermanBox.js"></script>
 	<script src="js/BombermanStone.js"></script>
+	<script src="js/BombermanRespawn.js"></script>
 	<script src="js/BombermanMap.js"></script>
 	<script src="js/BombermanMapRender.js"></script>
 	<script src="js/BombermanPlayer.js"></script>
@@ -43,17 +44,15 @@
 	<script>
 
 		var canvas = document.querySelector("#cns");
-		var x = 200;
-		//var map = new Bomberman.Map(canvas, 144, 144, 16);
 		var map = new Bomberman.Map(canvas, 60*17, 540, 60);
-		var player = new Bomberman.Player.Human("nick", map);
-		var monster1 = new Bomberman.Player.Monster("Dejo", map);
 
-		map.addPlayer(player);
-		map.addPlayer(monster1);
+		map.addPlayer(new Bomberman.Player.Human("Bomberman", map));
+		map.addPlayer(new Bomberman.Player.Monster("Dejo", map));
+		map.addPlayer(new Bomberman.Player.Monster("Vader", map));
+		map.addPlayer(new Bomberman.Player.Monster("Princ", map));
 		
 
-		window.setInterval(function(){map.refresh()}, 100);
+		window.setInterval(function(){map.refresh()}, 200);
 	</script>
 </body>
 </html>
