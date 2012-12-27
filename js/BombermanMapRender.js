@@ -71,37 +71,6 @@ Bomberman.Map.Render.prototype._insertToMap = function(something){
 	}
 }
 
-Bomberman.Map.Render.prototype._insertStoneToMap = function(){
-	var s = this._map.getStones();
-
-	for(var k in s) this._putCell(s[k].x, s[k].y, "grey");	
-}
-
-Bomberman.Map.Render.prototype._insertBombsToMap = function(){
-	var bombs = this._map.getBombs();
-	var cellSize = this._map.getCellSize();
-
-	for(var key in bombs){
-		var bomb = bombs[key];
-		var player = bomb.getPlayer();
-		var bombPos = bomb.getPosition();
-
-		if(!bomb.isTimeForBoom() && !bomb.isExploded())
-			this._putCell(bombPos.x, bombPos.y, "blue");
-
-		if(bomb.isTimeForBoom() || bomb.isExploding()){
-			var rangeBomb = player.getRangeOfBomb();
-			for (var i = 0; i < rangeBomb; i++) {
-				this._putCell(bombPos.x + (i * cellSize), bombPos.y, "red");
-				this._putCell(bombPos.x - (i * cellSize), bombPos.y, "red");
-				this._putCell(bombPos.x, bombPos.y + (i * cellSize), "red");	
-				this._putCell(bombPos.x, bombPos.y - (i * cellSize), "red");	
-			}
-			
-		}
-	}
-}
-
 // vykresli ctverecek
 Bomberman.Map.Render.prototype._putCell = function(x, y, color){
 	var cellSize = this._map.getCellSize();

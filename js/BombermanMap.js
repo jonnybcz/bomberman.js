@@ -25,7 +25,8 @@ Bomberman.Map.prototype.$constructor = function(canvas, width, height, cellSize)
 	this._canvas.height = height;
 	
 	this._buildStones();
-	this._buildBoxes();	
+	this._buildBoxes();
+	console.log(this._stones);	
 }
 
 Bomberman.Map.prototype.getCanvas = function(){
@@ -91,7 +92,6 @@ Bomberman.Map.prototype._removeExplosions = function(){
 	}
 }
 
-
 Bomberman.Map.prototype._buildStones = function(){
 	var columns = this._columns;
 
@@ -106,9 +106,9 @@ Bomberman.Map.prototype._buildStones = function(){
 	// buildStones rows
 	for (var i = 1; i < this._rows; i++) {
 		for (var j = 1; j < this._columns; j++) {
-			if(i % 2 && j % 2) this._stones.push(new Bomberman.Stone({x: (i+1) * this._cellSize, y: ++j * this._cellSize}, this._cellSize));
+			if(i % 2 && j % 2) this._stones.push(new Bomberman.Stone({x: (i+1) * this._cellSize, y: (j+1) * this._cellSize}, this._cellSize));
 		}
-	}
+	}	
 }
 
 Bomberman.Map.prototype._buildBoxes = function(){
@@ -121,7 +121,6 @@ Bomberman.Map.prototype._buildBoxes = function(){
 	for (var i = 1; i <= rows; i++) {
 		for (var j = 1; j <= columns; j++) {
 			var pos = {x: i * cellSize, y: j * cellSize};
-
 			if(this._isCellEmpty(pos) && Math.random() * (10 - 0) + 0 < chancePutBox) boxes.push(new Bomberman.Box(pos, cellSize));	
 		}
 	}
