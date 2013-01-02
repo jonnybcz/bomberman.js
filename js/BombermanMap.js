@@ -155,7 +155,7 @@ Bomberman.Map.prototype._removeBoxesAroundPlayer = function(playerPos){
 	var boxes = this._boxes;
 	var cellSize = this._cellSize;
 	var tmp = [];
-	console.log(playerPos);
+
 	for (var i = 0; i < boxes.length; i++) {
 		var boxPos = boxes[i].getPosition();
 
