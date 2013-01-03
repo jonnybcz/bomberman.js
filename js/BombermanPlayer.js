@@ -28,6 +28,10 @@ Bomberman.Player.prototype._setTimeLastMove = function(){
 	this._timeLastMove = Date.now();
 }
 
+Bomberman.Player.prototype.getMap = function(){
+	return this._map;
+}
+
 Bomberman.Player.prototype.getRangeOfBomb = function(){
 	return this._rangeOfBomb;
 }
