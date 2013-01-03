@@ -66,6 +66,7 @@ Bomberman.Map.prototype.refresh = function(){
 	var players = this._players;
 	this._removeExplodedBombs();
 	this._removeExplosions();
+	this._scanRangeExplosion();
 
 	for (var i = 0; i < players.length; i++) {
 		if(players[i] instanceof Bomberman.Player.Monster) players[i].generateMove();
@@ -223,6 +224,16 @@ Bomberman.Map.prototype.canIMoveThere = function(direction, player){
 
 Bomberman.Map.prototype.placeBomb = function(bomb, player){
 	this._bombs.push(bomb);
+}
+
+Bomberman.Map.prototype._scanRangeExplosion = function(){
+	var explosions = this._explosions;
+
+	// exploze nesmi pres kamen, zmensime rozsah
+	for (var i = 0; i < explosions.length; i++) {
+		
+	}
+
 }
 
 // neni nic na teto pozici ? kamen, bomba, hrac ....

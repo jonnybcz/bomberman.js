@@ -15,7 +15,7 @@ Bomberman.Player.prototype.$constructor = function(nick, map){
 	this._timeLastMove = null;
 
 	this._hasBomb = 1;
-	this._rangeOfBomb = 3;
+	this._rangeOfBomb = 2;
 
 	this._setTimeLastMove();
 }

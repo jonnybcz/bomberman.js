@@ -24,6 +24,10 @@ Bomberman.Player.Bomb.prototype.getPosition = function(){
 	return this._position;
 }
 
+Bomberman.Player.Bomb.prototype.getSize = function(){
+	return this._size;
+}
+
 Bomberman.Player.Bomb.prototype.getRangeExplosion = function(){
 	return this._player.getRangeOfBomb();
 }

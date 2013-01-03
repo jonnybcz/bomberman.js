@@ -55,18 +55,10 @@ Bomberman.Map.Render.prototype._insertToMap = function(something){
 
 		if(something[i] instanceof Bomberman.Player.Bomb.Explosion){
 			var explosion = something[i];
-			var explosionPos = explosion.getPosition();
-			var cellSize = this._map.getCellSize();
+			var explosionCoo = explosion.getCoordinates();
 
 			if(explosion.runs()){
-				var rangeExplosion = explosion.getRange();
-
-				for (var i = 0; i < rangeExplosion; i++) {
-					this._putCell(explosionPos.x + (i * cellSize), explosionPos.y, "red");
-					this._putCell(explosionPos.x - (i * cellSize), explosionPos.y, "red");
-					this._putCell(explosionPos.x, explosionPos.y + (i * cellSize), "red");	
-					this._putCell(explosionPos.x, explosionPos.y - (i * cellSize), "red");	
-				}
+				for (var i = 0; i < explosionCoo.length; i++) this._putCell(explosionCoo[i].x, explosionCoo[i].y, "red");
 			}
 		}
 	}
