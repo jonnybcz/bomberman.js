@@ -11,6 +11,7 @@ Bomberman.Player.prototype.$constructor = function(nick, map){
 	this._nick = nick;
 	this._map = map;
 	this._position = {x: 0, y: 0}
+	this._killedMonsters = 0;
 	this._howLongDoesMove = 250; 
 	this._timeLastMove = null;
 
@@ -47,6 +48,14 @@ Bomberman.Player.prototype.getPosition = function(){
 Bomberman.Player.prototype.setPosition = function(position){
 	this._position = {x: position.x, y: position.y};
 	this._setTimeLastMove();
+}
+
+Bomberman.Player.prototype.getKilledMonsters = function(){
+	return this._killedMonsters;
+}
+
+Bomberman.Player.prototype.setKilledMonsters = function(count){
+	this._killedMonsters = count;
 }
 
 // direction left, right, top, down
