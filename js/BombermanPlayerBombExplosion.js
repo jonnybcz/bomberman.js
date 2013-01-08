@@ -36,18 +36,47 @@ Bomberman.Player.Bomb.Explosion.prototype.runs = function(){
 }
 
 Bomberman.Player.Bomb.Explosion.prototype._initCoordinates = function(){
+	var map = this._bomb.getPlayer().getMap();
 	var coo = this._coordinates;
 	var cellSize = this._size;
 	var explosionPos = this._position;
 	var rangeExplosion = this.getRange();
+	var canIGenerate = {left: true, right: true, top: true, down: true};
 
 	coo.push({x: explosionPos.x, y: explosionPos.y});
 
 	for (var i = 1; i <= rangeExplosion; i++) {
-		coo.push({x: explosionPos.x + (i * cellSize), y: explosionPos.y});
-		coo.push({x: explosionPos.x - (i * cellSize), y: explosionPos.y});
-		coo.push({x: explosionPos.x, y: explosionPos.y + (i * cellSize)});
-		coo.push({x: explosionPos.x, y: explosionPos.y - (i * cellSize)});
+		var posRight = {x: explosionPos.x + (i * cellSize), y: explosionPos.y};
+		var posLeft = {x: explosionPos.x - (i * cellSize), y: explosionPos.y};
+		var posTop = {x: explosionPos.x, y: explosionPos.y + (i * cellSize)};
+		var posDown = {x: explosionPos.x, y: explosionPos.y - (i * cellSize)};
+
+		if(map.isOnCellStone(posRight)) canIGenerate.right = false;
+		if(map.isOnCellStone(posLeft)) canIGenerate.left = false;
+		if(map.isOnCellStone(posTop)) canIGenerate.top = false;
+		if(map.isOnCellStone(posDown)) canIGenerate.down = false;
+
+		if(canIGenerate.right) coo.push(posRight);
+		if(canIGenerate.left) coo.push(posLeft);
+		if(canIGenerate.top) coo.push(posTop);
+		if(canIGenerate.down) coo.push(posDown);
+
+		if(map.isOnCellBox(posRight) && canIGenerate.right){
+			canIGenerate.right = false;
+			map.removeBox(posRight);	
+		} 
+		if(map.isOnCellBox(posLeft) && canIGenerate.left){
+			canIGenerate.left = false;
+			map.removeBox(posLeft);	
+		} 
+		if(map.isOnCellBox(posTop) && canIGenerate.top){
+			canIGenerate.top = false;
+			map.removeBox(posTop);	
+		} 
+		if(map.isOnCellBox(posDown) && canIGenerate.down){
+			canIGenerate.down = false;
+			map.removeBox(posDown);	
+		} 
 	}
 }
 

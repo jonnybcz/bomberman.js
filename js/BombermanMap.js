@@ -62,11 +62,23 @@ Bomberman.Map.prototype.getCellSize = function(){
 	return this._cellSize;
 }
 
+Bomberman.Map.prototype.removeBox = function(position){
+	var boxes = this.getBoxes();
+	var tmp = [];
+
+	for (var i = 0; i < boxes.length; i++) {
+		var boxPos = boxes[i].getPosition();
+
+		if(!(boxPos.x == position.x && boxPos.y == position.y)) tmp.push(boxes[i]);
+	}
+
+	this._boxes = tmp;
+}
+
 Bomberman.Map.prototype.refresh = function(){
 	var players = this._players;
 	this._removeExplodedBombs();
 	this._removeExplosions();
-	this._scanRangeExplosion();
 
 	for (var i = 0; i < players.length; i++) {
 		if(players[i] instanceof Bomberman.Player.Monster) players[i].generateMove();
@@ -226,14 +238,28 @@ Bomberman.Map.prototype.placeBomb = function(bomb, player){
 	this._bombs.push(bomb);
 }
 
-Bomberman.Map.prototype._scanRangeExplosion = function(){
-	var explosions = this._explosions;
+Bomberman.Map.prototype.isOnCellStone = function(position){
+	var stones = this.getStones();
 
-	// exploze nesmi pres kamen, zmensime rozsah
-	for (var i = 0; i < explosions.length; i++) {
-		
+	for (var i = 0; i < stones.length; i++) {
+		var stonePos = stones[i].getPosition();
+
+		if(stonePos.x == position.x && stonePos.y == position.y) return true;
 	}
 
+	return false;
+}
+
+Bomberman.Map.prototype.isOnCellBox = function(position){
+	var boxes = this.getBoxes();
+
+	for (var i = 0; i < boxes.length; i++) {
+		var boxPos = boxes[i].getPosition();
+
+		if(boxPos.x == position.x && boxPos.y == position.y) return true;
+	}
+
+	return false;
 }
 
 // neni nic na teto pozici ? kamen, bomba, hrac ....
