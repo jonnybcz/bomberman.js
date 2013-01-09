@@ -33,7 +33,10 @@ Bomberman.Map.Render.prototype._insertToMap = function(something){
 		var pos = something[i].getPosition();
 
 		if(something[i] instanceof Bomberman.Player.Human) this._putCell(pos.x, pos.y, "green");
-		if(something[i] instanceof Bomberman.Player.Monster) this._putCell(pos.x, pos.y, "purple");
+		if(something[i] instanceof Bomberman.Player.Monster){
+			this._putCell(pos.x, pos.y, "purple");	
+			this._putImageCell(pos.x, pos.y, "img/textures/ghost.svg");
+		} 
 
 		if(something[i] instanceof Bomberman.Stone){
 			this._putCell(pos.x, pos.y, "grey");
@@ -76,11 +79,12 @@ Bomberman.Map.Render.prototype._putCell = function(x, y, color){
 }
 
 Bomberman.Map.Render.prototype._putImageCell = function(x, y, path){
+	var cellSize = this._map.getCellSize();
 	var ctx = this._ctx;
 
 	var img = new Image();
 	img.src = path;
-	ctx.drawImage(img, x, y);
+	ctx.drawImage(img, x, y, cellSize, cellSize);
 }
 
 
