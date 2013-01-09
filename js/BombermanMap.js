@@ -92,7 +92,7 @@ Bomberman.Map.prototype.refresh = function(){
 	var players = this._players;
 	this._removeExplodedBombs();
 	this._removeExplosions();
-	this._killPlayersUnderExplosion();
+	this._killPlayersAndBombsExplodesUnderExplosion();
 	this._removePlayers();
 
 	for (var i = 0; i < players.length; i++) {
@@ -103,10 +103,11 @@ Bomberman.Map.prototype.refresh = function(){
 	render.canvas();
 }
 
-Bomberman.Map.prototype._killPlayersUnderExplosion = function(){
+Bomberman.Map.prototype._killPlayersAndBombsExplodesUnderExplosion = function(){
 	var explosionsMatrix = this.getExplosions();
 	var explosions = [];
 	var players = this.getPlayers();
+	var bombs = this.getBombs();
 
 	for (var i = 0; i < explosionsMatrix.length; i++) {
 		var explCoords = explosionsMatrix[i].getCoordinates();
@@ -121,9 +122,16 @@ Bomberman.Map.prototype._killPlayersUnderExplosion = function(){
 
 		for (var j = 0; j < players.length; j++) {
 			var player  = players[j];
-			var playerCoo = player.getPosition();
+			var playerPos = player.getPosition();
 
-			if(playerCoo.x == explosion.x && playerCoo.y == explosion.y) player.kill();
+			if(playerPos.x == explosion.x && playerPos.y == explosion.y) player.kill();
+		}
+
+		for (var j = 0; j < bombs.length; j++) {
+			var bomb = bombs[j];
+			bombPos = bomb.getPosition();
+
+			if(bombPos.x == explosion.x && bombPos.y == explosion.y) bomb.isTimeForBoom(true);
 		}
 	}
 }
@@ -133,7 +141,7 @@ Bomberman.Map.prototype._removeExplodedBombs = function(){
 	var tmp = [];
 
 	for (var i = 0; i < bombs.length; i++) if(bombs[i].isExploded()) tmp.push(i);
-
+		
 	var diff = 0;
 	for (var i = 0; i < tmp.length; i++){
 		this._explosions.push(new Bomberman.Player.Bomb.Explosion(bombs[i]));

@@ -37,8 +37,8 @@ Bomberman.Player.Bomb.prototype.getPlayer = function(){
 }
 
 // je cas aby bomba vybuchla ?
-Bomberman.Player.Bomb.prototype.isTimeForBoom = function(){
-	if(Date.now() >= this._detonator && !this._exploded){
+Bomberman.Player.Bomb.prototype.isTimeForBoom = function(nowExplode){
+	if((Date.now() >= this._detonator && !this._exploded) || (nowExplode === true && !this._exploded)){
 		this._setExploded();
 		this._setTimeWhenExplode();
 		return true;	
