@@ -11,6 +11,17 @@ Bomberman.Box = JAK.ClassMaker.makeClass({
 Bomberman.Box.prototype.$constructor = function(position, size){
 	this._position = position;
 	this._size = size;
+	this._timeDissapear = null;
+}
+
+Bomberman.Box.prototype.setTimeDisappear = function(time){
+	this._timeDissapear = time;
+}
+
+Bomberman.Box.prototype.canIDisappear = function(){
+	if (this._timeDissapear == null) return false;
+
+	if (this._timeDissapear < Date.now()) return true;
 }
 
 Bomberman.Box.prototype.getPosition = function(){

@@ -62,17 +62,27 @@ Bomberman.Map.prototype.getCellSize = function(){
 	return this._cellSize;
 }
 
-Bomberman.Map.prototype.removeBox = function(position){
+Bomberman.Map.prototype.removeBox = function(position, explosion){
 	var boxes = this.getBoxes();
 	var tmp = [];
 
 	for (var i = 0; i < boxes.length; i++) {
+		var box = boxes[i];
 		var boxPos = boxes[i].getPosition();
 
-		if(!(boxPos.x == position.x && boxPos.y == position.y)) tmp.push(boxes[i]);
+		if(boxPos.x == position.x && boxPos.y == position.y) box.setTimeDisappear(explosion.getExplosionTimeTo());
 	}
+}
 
-	this._boxes = tmp;
+Bomberman.Map.prototype._removeDisapperedBoxes = function(){
+	var boxes = this.getBoxes();
+	var tmp = [];
+
+	for (var i = 0; i < boxes.length; i++) {
+		if (boxes[i].canIDisappear()) tmp.push(i);
+	}	
+
+	boxes.removeIndexes(tmp);
 }
 
 Bomberman.Map.prototype._removePlayers = function(position){
@@ -94,6 +104,7 @@ Bomberman.Map.prototype.refresh = function(){
 	this._removeExplosions();
 	this._killPlayersAndBombsExplodesUnderExplosion();
 	this._removePlayers();
+	this._removeDisapperedBoxes();
 
 	for (var i = 0; i < players.length; i++) {
 		if(players[i] instanceof Bomberman.Player.Monster) players[i].generateMove();

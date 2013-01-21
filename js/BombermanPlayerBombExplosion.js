@@ -30,6 +30,11 @@ Bomberman.Player.Bomb.Explosion.prototype.getCoordinates = function(){
 Bomberman.Player.Bomb.Explosion.prototype.getRange = function(){
 	return this._bomb.getRangeExplosion();
 }
+
+Bomberman.Player.Bomb.Explosion.prototype.getExplosionTimeTo = function(){
+	return this._explosionTimeTo;
+}
+
 // pravě probíhá výbuch
 Bomberman.Player.Bomb.Explosion.prototype.runs = function(){
 	return (Date.now() <= this._explosionTimeTo);
@@ -63,19 +68,19 @@ Bomberman.Player.Bomb.Explosion.prototype._initCoordinates = function(){
 
 		if(map.isOnCellBox(posRight) && canIGenerate.right){
 			canIGenerate.right = false;
-			map.removeBox(posRight);	
+			map.removeBox(posRight, this);	
 		} 
 		if(map.isOnCellBox(posLeft) && canIGenerate.left){
 			canIGenerate.left = false;
-			map.removeBox(posLeft);	
+			map.removeBox(posLeft, this);	
 		} 
 		if(map.isOnCellBox(posTop) && canIGenerate.top){
 			canIGenerate.top = false;
-			map.removeBox(posTop);	
+			map.removeBox(posTop, this);	
 		} 
 		if(map.isOnCellBox(posDown) && canIGenerate.down){
 			canIGenerate.down = false;
-			map.removeBox(posDown);	
+			map.removeBox(posDown, this);	
 		} 
 	}
 }
