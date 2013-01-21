@@ -82,10 +82,10 @@ Bomberman.Map.prototype._removePlayers = function(position){
 	for (var i = 0; i < players.length; i++) {
 		var player = players[i];
 
-		if(!player.isDead()) tmp.push(player);
+		if(player.isDead()) tmp.push(i);
 	}
 
-	this._players = tmp;
+	players.removeIndexes(tmp);
 }
 
 Bomberman.Map.prototype.refresh = function(){
@@ -142,12 +142,11 @@ Bomberman.Map.prototype._removeExplodedBombs = function(){
 
 	for (var i = 0; i < bombs.length; i++) if(bombs[i].isExploded()) tmp.push(i);
 		
-	var diff = 0;
 	for (var i = 0; i < tmp.length; i++){
 		this._explosions.push(new Bomberman.Player.Bomb.Explosion(bombs[i]));
-		bombs.splice(tmp[i], 1);
-		diff++;
 	}
+
+	bombs.removeIndexes(tmp);
 }
 
 Bomberman.Map.prototype._removeExplosions = function(){
@@ -156,11 +155,7 @@ Bomberman.Map.prototype._removeExplosions = function(){
 
 	for (var i = 0; i < explosions.length; i++) if(!explosions[i].runs()) tmp.push(i);
 
-	var diff = 0;
-	for (var i = 0; i < tmp.length; i++){
-		explosions.splice(tmp[i], 1);
-		diff++;
-	}
+	explosions.removeIndexes(tmp);	
 }
 
 Bomberman.Map.prototype._buildStones = function(){

@@ -6,14 +6,6 @@
 	 <!--<link rel="stylesheet" type="text/css" href="css/screen.css">-->
 	<script src="js/lib/jak.js"></script>
 	<script>
-		Array.prototype.copy = function(){
-			var tmp = [];
-
-			for (var i = 0; i < this.length; i++) tmp.push(this[i]);			
-
-			return tmp;
-		};
-
 	 	var Bomberman = JAK.ClassMaker.makeClass({
 	 		NAME: "Bomberman",
 	 		VERSION: "1.0"
@@ -29,6 +21,7 @@
 	<div draggable=true style="width:16px; height: 16px; background-color:green;"></div>-->
 	<div id="game"><canvas id="cns" style="border: 1px solid black;"></canvas></div>
 
+	<script src="js/Universal.js"></script>
 	<script src="js/BombermanBox.js"></script>
 	<script src="js/BombermanStone.js"></script>
 	<script src="js/BombermanRespawn.js"></script>
