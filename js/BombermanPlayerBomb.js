@@ -53,6 +53,7 @@ Bomberman.Player.Bomb.prototype.isExploded = function(){
 
 // bomba explodovala
 Bomberman.Player.Bomb.prototype._setExploded = function(){
+	this.getPlayer().addBombToInventory();
 	this._exploded = true;
 }
 

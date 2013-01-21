@@ -72,11 +72,15 @@ Bomberman.Player.prototype.kill = function(){
 	this._dead = true;
 }
 
+Bomberman.Player.prototype.addBombToInventory = function(){
+	this._hasBomb++;
+}
+
 Bomberman.Player.prototype._putBomb = function(){
 	if(this._hasBomb > 0){
       		var bomb = new Bomberman.Player.Bomb(this, this.getPosition(), this._map.getCellSize());
 
 		this._map.placeBomb(bomb);
-      		this._bomb--;
+      		this._hasBomb--;
 	}
 }
