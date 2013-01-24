@@ -22,6 +22,7 @@
 	<div id="game"><canvas id="cns" style="border: 1px solid black;"></canvas></div>
 
 	<script src="js/Universal.js"></script>
+	<script src="js/BombermanAudio.js"></script>
 	<script src="js/BombermanBox.js"></script>
 	<script src="js/BombermanStone.js"></script>
 	<script src="js/BombermanRespawn.js"></script>
@@ -35,9 +36,10 @@
 
 	
 	<script>
-
 		var canvas = document.querySelector("#cns");
 		var map = new Bomberman.Map(canvas, 60*17, 540, 60);
+
+
 
 		map.addPlayer(new Bomberman.Player.Human("Bomberman", map));
 		map.addPlayer(new Bomberman.Player.Monster("Dejo", map));

@@ -13,6 +13,13 @@ Bomberman.Player.Human.prototype.$constructor = function(nick, map){
 	JAK.Events.addListener(window, "keydown", this, "_move");
 }
 
+Bomberman.Player.prototype.kill = function(){
+	var audio = new Bomberman.Audio();
+	audio.play("killPlayer");
+	
+	this._dead = true;
+}
+
 Bomberman.Player.Human.prototype._move = function(e, elm){
 	switch (e.keyCode) {
 		case 65: // A 

@@ -16,6 +16,13 @@ Bomberman.Player.Monster.prototype.generateMove = function(){
 	this._makeStep(this._getDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1));
 }
 
+Bomberman.Player.prototype.kill = function(){
+	var audio = new Bomberman.Audio();
+	audio.play("killPlayer");
+	
+	this._dead = true;
+}
+
 Bomberman.Player.Monster.prototype._getDirection = function(number){
 	switch (number) {
 		case 1:

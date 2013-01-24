@@ -68,9 +68,6 @@ Bomberman.Player.prototype._makeStep = function(direction){
 	if(this._getTimeLastMove() + this._howLongDoesMove <= Date.now()) this._map.canIMoveThere(direction, this);
 }
 
-Bomberman.Player.prototype.kill = function(){
-	this._dead = true;
-}
 
 Bomberman.Player.prototype.addBombToInventory = function(){
 	this._hasBomb++;
