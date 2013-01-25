@@ -22,12 +22,15 @@ Bomberman.Map.prototype.$constructor = function(canvas, width, height, cellSize)
 	this._explosions = []; // tady se presouva po vybuchnuti bomba
 	this._players = [];
 	this._respawns = [];
+	this._door = [];
+
+	this._countMonsters = this._players.length - 1;
 
 	this._canvas.width = width;
 	this._canvas.height = height;
 	
 	this._buildStones();
-	this._buildBoxes();
+	this._buildBoxesAndDoor();
 	this._buildRespawns();
 }
 
@@ -37,6 +40,10 @@ Bomberman.Map.prototype.getCanvas = function(){
 
 Bomberman.Map.prototype.getStones = function(){
 	return this._stones;
+}
+
+Bomberman.Map.prototype.getDoor = function(){
+	return this._door;
 }
 
 Bomberman.Map.prototype.getPlayers = function(){
@@ -88,6 +95,7 @@ Bomberman.Map.prototype._removeDisapperedBoxes = function(){
 
 Bomberman.Map.prototype._removePlayers = function(position){
 	var players = this.getPlayers();
+	var countMonsters = 0;
 	var tmp = [];
 
 	for (var i = 0; i < players.length; i++) {
@@ -95,9 +103,9 @@ Bomberman.Map.prototype._removePlayers = function(position){
 
 		if(player.isDead()) tmp.push(i);
 
-		if(players[i] instanceof Bomberman.Player.Human && players[i].isDead()){
-			this._gameOver();
-		}
+		if(players[i] instanceof Bomberman.Player.Human && players[i].isDead())	this._gameOver();
+		if(players[i] instanceof Bomberman.Player.Monster) countMonsters++;
+		if(countMonsters == 0) this._countMonsters = 0;
 	}
 
 	players.removeIndexes(tmp);
@@ -117,6 +125,10 @@ Bomberman.Map.prototype.refresh = function(){
 
 	var render = new Bomberman.Map.Render(this);
 	render.canvas();
+}
+
+Bomberman.Map.prototype._win = function(){
+
 }
 
 Bomberman.Map.prototype._gameOver = function(){
@@ -201,18 +213,27 @@ Bomberman.Map.prototype._buildStones = function(){
 	}	
 }
 
-Bomberman.Map.prototype._buildBoxes = function(){
+Bomberman.Map.prototype._buildBoxesAndDoor = function(){
 	var boxes = this._boxes;
 	var columns = this._columns;
 	var rows = this._rows;
 	var cellSize = this._cellSize;
 	var chancePutBox = 9; // 0 / 10 , cim vetsi cislo tim vetsi sance na polozeni bednicky
+	var existDoor = false;
 
 	for (var i = 1; i <= columns; i++) {
 		for (var j = 1; j <= rows; j++) {
 			var pos = {x: i * cellSize, y: j * cellSize};
-			if(this._isCellEmpty(pos) && Math.random() * (10 - 0) + 0 < chancePutBox) boxes.push(new Bomberman.Box(pos, cellSize));	
+			if(this._isCellEmpty(pos) && Math.random() * (10 - 0) + 0 < chancePutBox) boxes.push(new Bomberman.Box(pos, cellSize));
+			if(!existDoor && this._isCellEmpty(pos) && Math.random() * (15 - 0) + 0 < 3){
+				this._door.push(new Bomberman.Door(pos, cellSize));
+				existDoor = true;
+			}
 		}
+	}
+
+	if(!existDoor) {
+		this._door.push(new Bomberman.Door({x: this._width - cellSize * 2, y: this._height - cellSize * 2}, cellSize));
 	}
 }
 

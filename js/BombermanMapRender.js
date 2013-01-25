@@ -19,8 +19,8 @@ Bomberman.Map.Render.prototype.$constructor = function(map){
 // vykresli canvas
 Bomberman.Map.Render.prototype.canvas = function(){
 	this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.width);
-
 	this._insertToMap(this._map.getStones());
+	this._insertToMap(this._map.getDoor());
 	this._insertToMap(this._map.getBoxes());
 	this._insertToMap(this._map.getPlayers());
 	this._insertToMap(this._map.getBombs());
@@ -48,6 +48,10 @@ Bomberman.Map.Render.prototype._insertToMap = function(something){
 		if(something[i] instanceof Bomberman.Stone){
 			this._putCell(pos.x, pos.y, "grey");
 			this._putImageCell(pos.x, pos.y, "img/textures/stone.png");
+		}
+
+		if(something[i] instanceof Bomberman.Door){
+			this._putCell(pos.x, pos.y, "pink");
 		}
 
 		if(something[i] instanceof Bomberman.Box){
