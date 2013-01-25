@@ -32,7 +32,14 @@ Bomberman.Map.Render.prototype._insertToMap = function(something){
 	for (var i = 0; i < something.length; i++) {
 		var pos = something[i].getPosition();
 
-		if(something[i] instanceof Bomberman.Player.Human) this._putCell(pos.x, pos.y, "green");
+		if(something[i] instanceof Bomberman.Player.Human){
+			var player = something[i];
+			if(player.getDirection() == "left") this._putCell(pos.x, pos.y, "green");
+			if(player.getDirection() == "right") this._putCell(pos.x, pos.y, "green");
+			if(player.getDirection() == "up") this._putCell(pos.x, pos.y, "blue");
+			if(player.getDirection() == "down") this._putCell(pos.x, pos.y, "blue");
+		} 
+
 		if(something[i] instanceof Bomberman.Player.Monster){
 			this._putCell(pos.x, pos.y, "purple");	
 			this._putImageCell(pos.x, pos.y, "img/textures/ghost.svg");
