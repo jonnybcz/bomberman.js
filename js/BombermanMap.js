@@ -14,6 +14,7 @@ Bomberman.Map.prototype.$constructor = function(canvas, width, height, cellSize)
 	this._columns = width / cellSize;
 	this._rows = height / cellSize;
 	this._cellSize = cellSize;
+	this._gameOver = false;
 
 	this._stones = [];
 	this._boxes = [];
@@ -93,6 +94,10 @@ Bomberman.Map.prototype._removePlayers = function(position){
 		var player = players[i];
 
 		if(player.isDead()) tmp.push(i);
+
+		if(players[i] instanceof Bomberman.Player.Human && players[i].isDead()){
+			this._gameOver();
+		}
 	}
 
 	players.removeIndexes(tmp);
@@ -103,8 +108,8 @@ Bomberman.Map.prototype.refresh = function(){
 	this._removeExplodedBombs();
 	this._removeExplosions();
 	this._killPlayersAndBombsExplodesUnderExplosion();
-	this._removePlayers();
 	this._removeDisapperedBoxes();
+	this._removePlayers();
 
 	for (var i = 0; i < players.length; i++) {
 		if(players[i] instanceof Bomberman.Player.Monster) players[i].generateMove();
@@ -112,6 +117,14 @@ Bomberman.Map.prototype.refresh = function(){
 
 	var render = new Bomberman.Map.Render(this);
 	render.canvas();
+}
+
+Bomberman.Map.prototype._gameOver = function(){
+	this._gameOver = true;
+	var textGO = JAK.mel("div", {innerHTML: "GAME OVER", id: "gameOver"});
+	
+	var audio = new Bomberman.Audio();
+	audio.play("gameOver");
 }
 
 Bomberman.Map.prototype._killPlayersAndBombsExplodesUnderExplosion = function(){
