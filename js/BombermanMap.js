@@ -24,8 +24,7 @@ Bomberman.Map.prototype.$constructor = function(canvas, width, height, cellSize)
 	this._respawns = [];
 	this._door = [];
 
-	this._countMonsters = this._players.length - 1;
-
+	this._countMonsters = 0;
 	this._canvas.width = width;
 	this._canvas.height = height;
 	
@@ -103,9 +102,8 @@ Bomberman.Map.prototype._removePlayers = function(position){
 
 		if(player.isDead()) tmp.push(i);
 
-		if(players[i] instanceof Bomberman.Player.Human && players[i].isDead())	this._gameOver();
-		if(players[i] instanceof Bomberman.Player.Monster) countMonsters++;
-		if(countMonsters == 0) this._countMonsters = 0;
+		if(player instanceof Bomberman.Player.Human && player.isDead())	this._GO();
+		if(player instanceof Bomberman.Player.Monster && player.isDead()) this._countMonsters--;
 	}
 
 	players.removeIndexes(tmp);
@@ -118,6 +116,7 @@ Bomberman.Map.prototype.refresh = function(){
 	this._killPlayersAndBombsExplodesUnderExplosion();
 	this._removeDisapperedBoxes();
 	this._removePlayers();
+	this._win();
 
 	for (var i = 0; i < players.length; i++) {
 		if(players[i] instanceof Bomberman.Player.Monster) players[i].generateMove();
@@ -128,15 +127,33 @@ Bomberman.Map.prototype.refresh = function(){
 }
 
 Bomberman.Map.prototype._win = function(){
+	var players = this._players;
+	var doors = this._door;
+	var countMonsters = this._countMonsters;
 
+	for (var i = 0; i < players.length; i++) {
+		if(players[i] instanceof Bomberman.Player.Human){
+			var playerPos = players[i].getPosition();
+
+			for (var i = 0; i < doors.length; i++) {
+				var doorPos = doors[i].getPosition;
+				
+				if(doorPos.x == playerPos.x && doorPos.y == playerPos.y && countMonsters == 0){
+					console.log("WINNER");
+				}
+			}
+		}
+	}
 }
 
-Bomberman.Map.prototype._gameOver = function(){
+Bomberman.Map.prototype._GO = function(){
 	this._gameOver = true;
+	var place = JAK.gel("game");
 	var textGO = JAK.mel("div", {innerHTML: "GAME OVER", id: "gameOver"});
-	
 	var audio = new Bomberman.Audio();
 	audio.play("gameOver");
+
+	place.appendChild(textGO);
 }
 
 Bomberman.Map.prototype._killPlayersAndBombsExplodesUnderExplosion = function(){
@@ -280,6 +297,8 @@ Bomberman.Map.prototype.addPlayer = function(player){
 	player.setPosition(respawnPos);
 	this._players.push(player);
 	this._removeBoxesAroundPlayer(player.getPosition());
+
+	if (player instanceof Bomberman.Player.Monster) this._countMonsters++;
 }
 
 Bomberman.Map.prototype.canIMoveThere = function(direction, player){

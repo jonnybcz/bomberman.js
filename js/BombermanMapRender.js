@@ -22,8 +22,8 @@ Bomberman.Map.Render.prototype.canvas = function(){
 	this._insertToMap(this._map.getStones());
 	this._insertToMap(this._map.getDoor());
 	this._insertToMap(this._map.getBoxes());
-	this._insertToMap(this._map.getPlayers());
 	this._insertToMap(this._map.getBombs());
+	this._insertToMap(this._map.getPlayers());
 	this._insertToMap(this._map.getExplosions());
 }
 
@@ -34,10 +34,10 @@ Bomberman.Map.Render.prototype._insertToMap = function(something){
 
 		if(something[i] instanceof Bomberman.Player.Human){
 			var player = something[i];
-			if(player.getDirection() == "left") this._putCell(pos.x, pos.y, "green");
-			if(player.getDirection() == "right") this._putCell(pos.x, pos.y, "green");
-			if(player.getDirection() == "up") this._putCell(pos.x, pos.y, "blue");
-			if(player.getDirection() == "down") this._putCell(pos.x, pos.y, "blue");
+			if(player.getDirection() == "left") this._putImageCell(pos.x, pos.y, "img/textures/bombermanLeft.svg");
+			if(player.getDirection() == "right") this._putImageCell(pos.x, pos.y, "img/textures/bombermanRight.svg");
+			if(player.getDirection() == "up") this._putImageCell(pos.x, pos.y, "img/textures/bombermanUp.svg");
+			if(player.getDirection() == "down") this._putImageCell(pos.x, pos.y, "img/textures/bombermanDown.svg");
 		} 
 
 		if(something[i] instanceof Bomberman.Player.Monster){
@@ -47,16 +47,16 @@ Bomberman.Map.Render.prototype._insertToMap = function(something){
 
 		if(something[i] instanceof Bomberman.Stone){
 			this._putCell(pos.x, pos.y, "grey");
-			this._putImageCell(pos.x, pos.y, "img/textures/stone.png");
+			this._putImageCell(pos.x, pos.y, "img/textures/stone.svg");
 		}
 
 		if(something[i] instanceof Bomberman.Door){
-			this._putCell(pos.x, pos.y, "pink");
+			this._putImageCell(pos.x, pos.y, "img/textures/door.svg");
 		}
 
 		if(something[i] instanceof Bomberman.Box){
-			this._putCell(pos.x, pos.y, "yellow");
-			//this._putImageCell(pos.x, pos.y, "img/textures/stone.png");
+			//this._putCell(pos.x, pos.y, "yellow");
+			this._putImageCell(pos.x, pos.y, "img/textures/wall.svg");
 		}
 
 		if(something[i] instanceof Bomberman.Player.Bomb){
@@ -64,7 +64,7 @@ Bomberman.Map.Render.prototype._insertToMap = function(something){
 			var player = bomb.getPlayer();
 			var bombPos = bomb.getPosition();
 
-			if(!bomb.isTimeForBoom()) this._putCell(bombPos.x, bombPos.y, "blue");
+			if(!bomb.isTimeForBoom()) this._putImageCell(pos.x, pos.y, "img/textures/bomb.svg");
 		} 
 
 		if(something[i] instanceof Bomberman.Player.Bomb.Explosion){
