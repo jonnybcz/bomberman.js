@@ -22,7 +22,7 @@ Bomberman.Audio.prototype._preLoad = function(file){
 	var audio = this._audio;
 
 	for (var i = 0; i < sounds.length; i++) {
-		audio.src = sounds[i] + this._extension;
+		audio.src = this._path + sounds[i] + this._extension;
 		audio.load();
 	}
 }

@@ -150,7 +150,7 @@ Bomberman.Map.prototype._GO = function(){
 	this._gameOver = true;
 	var place = JAK.gel("game");
 	var textGO = JAK.mel("div", {innerHTML: "GAME OVER", id: "gameOver"});
-	var audio = new Bomberman.Audio();
+	var audio = JAK.ServiceLocator.getService("audio");
 	audio.play("gameOver");
 
 	place.appendChild(textGO);

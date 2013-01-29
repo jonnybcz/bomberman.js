@@ -14,7 +14,7 @@ Bomberman.Player.Human.prototype.$constructor = function(nick, map){
 }
 
 Bomberman.Player.prototype.kill = function(){
-	var audio = new Bomberman.Audio();
+	var audio = JAK.ServiceLocator.getService("audio");
 	audio.play("killPlayer");
 	
 	this._dead = true;

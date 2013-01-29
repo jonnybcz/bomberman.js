@@ -39,7 +39,7 @@ Bomberman.Player.Bomb.prototype.getPlayer = function(){
 // je cas aby bomba vybuchla ?
 Bomberman.Player.Bomb.prototype.isTimeForBoom = function(nowExplode){
 	if((Date.now() >= this._detonator && !this._exploded) || (nowExplode === true && !this._exploded)){
-		var audio = new Bomberman.Audio();
+		var audio = JAK.ServiceLocator.getService("audio");
 		audio.play("explosion");
 		
 		this._setExploded();

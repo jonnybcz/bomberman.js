@@ -5,6 +5,7 @@
 	<title>Bomberman.js</title>
 	<link rel="stylesheet" type="text/css" href="css/screen.css">
 	<script src="js/lib/jak.js"></script>
+	<script src="js/lib/servicelocator.js"></script>
 	<script>
 	 	var Bomberman = JAK.ClassMaker.makeClass({
 	 		NAME: "Bomberman",
@@ -33,10 +34,10 @@
 
 	
 	<script>
+		JAK.ServiceLocator.addService("audio", new Bomberman.Audio());
+
 		var canvas = document.querySelector("#cns");
 		var map = new Bomberman.Map(canvas, 60*17, 540, 60);
-
-
 
 		map.addPlayer(new Bomberman.Player.Human("Bomberman", map));
 		map.addPlayer(new Bomberman.Player.Monster("Dejo", map));
