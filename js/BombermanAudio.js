@@ -1,5 +1,4 @@
 /**
-* mmm to chce ServiceLocator... @todo
 * author: topa
 * @class Třída Bomberman.Audio
 */
