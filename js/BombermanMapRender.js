@@ -27,9 +27,10 @@ Bomberman.Map.Render.prototype.canvas = function(){
 	this._insertToMap(this._map.getExplosions());
 }
 
-Bomberman.Map.Render.prototype._insertToMap = function(something){
-	
-	for (var i = 0; i < something.length; i++) {
+Bomberman.Map.Render.prototype._insertToMap = function(something){	
+	var length = something.length;
+
+	for (var i = 0; i < length; i++) {
 		var pos = something[i].getPosition();
 
 		if(something[i] instanceof Bomberman.Player.Human){
@@ -49,7 +50,7 @@ Bomberman.Map.Render.prototype._insertToMap = function(something){
 			this._putCell(pos.x, pos.y, "grey");
 			this._putImageCell(pos.x, pos.y, "img/textures/stone.svg");
 		}
-
+		
 		if(something[i] instanceof Bomberman.Door){
 			this._putImageCell(pos.x, pos.y, "img/textures/door.svg");
 		}
@@ -72,7 +73,7 @@ Bomberman.Map.Render.prototype._insertToMap = function(something){
 			var explosionCoo = explosion.getCoordinates();
 
 			if(explosion.runs()){
-				for (var i = 0; i < explosionCoo.length; i++) this._putCell(explosionCoo[i].x, explosionCoo[i].y, "red");
+				for (var j = 0; j < explosionCoo.length; j++) this._putCell(explosionCoo[j].x, explosionCoo[j].y, "red");
 			}
 		}
 	}

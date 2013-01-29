@@ -31,6 +31,8 @@ Bomberman.Map.prototype.$constructor = function(canvas, width, height, cellSize)
 	this._buildStones();
 	this._buildBoxesAndDoor();
 	this._buildRespawns();
+
+	this._render = new Bomberman.Map.Render(this);
 }
 
 Bomberman.Map.prototype.getCanvas = function(){
@@ -121,9 +123,8 @@ Bomberman.Map.prototype.refresh = function(){
 	for (var i = 0; i < players.length; i++) {
 		if(players[i] instanceof Bomberman.Player.Monster) players[i].generateMove();
 	}
-
-	var render = new Bomberman.Map.Render(this);
-	render.canvas();
+	
+	this._render.canvas();
 }
 
 Bomberman.Map.prototype._win = function(){
