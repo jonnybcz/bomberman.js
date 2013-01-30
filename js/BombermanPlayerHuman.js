@@ -10,10 +10,11 @@ Bomberman.Player.Human = JAK.ClassMaker.makeClass({
 
 Bomberman.Player.Human.prototype.$constructor = function(nick, map){
 	this.$super(nick, map);
-	JAK.Events.addListener(window, "keydown", this, "_move");
+	this._keyboardEvent = JAK.Events.addListener(window, "keydown", this, "_move");
 }
 
-Bomberman.Player.prototype.kill = function(){
+Bomberman.Player.Human.prototype.kill = function(){
+	JAK.Events.removeListeners([this._keyboardEvent]);
 	var audio = JAK.ServiceLocator.getService("audio");
 	audio.play("killPlayer");
 	
