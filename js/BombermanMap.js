@@ -115,7 +115,7 @@ Bomberman.Map.prototype.refresh = function(){
 	var players = this._players;
 	this._removeExplodedBombs();
 	this._removeExplosions();
-	this._killPlayersAndBombsExplodesUnderExplosion();
+	this._killPlayers();
 	this._removeDisapperedBoxes();
 	this._removePlayers();
 	this._win();
@@ -157,12 +157,13 @@ Bomberman.Map.prototype._GO = function(){
 	place.appendChild(textGO);
 }
 
-Bomberman.Map.prototype._killPlayersAndBombsExplodesUnderExplosion = function(){
+Bomberman.Map.prototype._killPlayers = function(){
 	var explosionsMatrix = this.getExplosions();
 	var explosions = [];
 	var players = this.getPlayers();
 	var bombs = this.getBombs();
 
+	/* EXPLOSION BOMB */
 	for (var i = 0; i < explosionsMatrix.length; i++) {
 		var explCoords = explosionsMatrix[i].getCoordinates();
 
@@ -188,6 +189,24 @@ Bomberman.Map.prototype._killPlayersAndBombsExplodesUnderExplosion = function(){
 			if(bombPos.x == explosion.x && bombPos.y == explosion.y) bomb.isTimeForBoom(true);
 		}
 	}
+	/* KILLED BY MONSTER */
+	var humans = [];
+
+	for (var i = 0; i < players.length; i++) {
+		if(players[i] instanceof Bomberman.Player.Human) humans.push(players[i]);
+	}
+
+	for (var i = 0; i < humans.length; i++) {
+		var humanPos = humans[i].getPosition();
+
+		for (var j = 0; j < players.length; j++) {
+			var playerPos = players[j].getPosition();
+
+			if(players[j] instanceof Bomberman.Player.Monster && humanPos.x == playerPos.x && humanPos.y == playerPos.y) humans[i].kill();
+		}
+	}
+
+
 }
 
 Bomberman.Map.prototype._removeExplodedBombs = function(){
@@ -392,10 +411,10 @@ Bomberman.Map.prototype._isCellEmpty = function(position){
 		if(boxPos.x == position.x && boxPos.y == position.y) return false;
 	}
 
-	for (var i = 0; i < players.length; i++) {
+	/*for (var i = 0; i < players.length; i++) {
 		var playerPos = players[i].getPosition();
 		if(playerPos.x == position.x && playerPos.y == position.y) return false;
-	}
+	}*/
 
 	return true;
 
