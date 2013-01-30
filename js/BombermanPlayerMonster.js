@@ -10,10 +10,23 @@ Bomberman.Player.Monster = JAK.ClassMaker.makeClass({
 
 Bomberman.Player.Monster.prototype.$constructor = function(nick, map){
 	 this.$super(nick, map);
+	 this._kindMonster = "";
+	 this._setKindOfMonster();
+}
+
+Bomberman.Player.Monster.prototype.getKind = function(){
+	return this._kindMonster;
 }
 
 Bomberman.Player.Monster.prototype.generateMove = function(){
 	this._makeStep(this._getDirection(Math.floor(Math.random() * (4 - 1 + 1)) + 1));
+}
+
+Bomberman.Player.Monster.prototype._setKindOfMonster = function(){
+	var monsters = ["ghost", "spectre", "squid", "swallow", "terror"];
+	var randomNumber = Math.floor(Math.random() * (monsters.length - 1 + 1)) + 1;
+	
+	this._kindMonster = monsters[randomNumber];
 }
 
 Bomberman.Player.prototype.kill = function(){

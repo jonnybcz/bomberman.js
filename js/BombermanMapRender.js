@@ -61,7 +61,7 @@ Bomberman.Map.Render.prototype._insertToMap = function(something){
 
 		if(something[i] instanceof Bomberman.Player.Monster){
 			this._putCell(pos.x, pos.y, "purple");	
-			this._putImageCell(pos.x, pos.y, "ghost");
+			this._putImageCell(pos.x, pos.y, something[i].getKind());
 		} 
 
 		if(something[i] instanceof Bomberman.Stone){
