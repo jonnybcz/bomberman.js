@@ -136,8 +136,8 @@ Bomberman.Map.prototype._win = function(){
 		if(players[i] instanceof Bomberman.Player.Human){
 			var playerPos = players[i].getPosition();
 
-			for (var i = 0; i < doors.length; i++) {
-				var doorPos = doors[i].getPosition;
+			for (var j = 0; j < doors.length; j++) {
+				var doorPos = doors[j].getPosition();
 				
 				if(doorPos.x == playerPos.x && doorPos.y == playerPos.y && countMonsters == 0){
 					console.log("WINNER");
