@@ -22,8 +22,9 @@
 		<div class="cloud x4"></div>
 		<div class="cloud x5"></div>
 	
-		<div id="game"><canvas id="cns" style="border: 1px solid black;"></canvas></div>
+		<div id="game"><canvas id="cns" style="border: 1px solid black;"></canvas></div>	
 	</div>
+	
 	
 	<script src="js/Universal.js"></script>
 	<script src="js/BombermanAudio.js"></script>
@@ -42,8 +43,9 @@
 	<script>
 		JAK.ServiceLocator.addService("audio", new Bomberman.Audio());
 
+		var gameBoard = JAK.gel("game");
 		var canvas = document.querySelector("#cns");
-		var map = new Bomberman.Map(canvas, 60*17, 540, 60);
+		var map = new Bomberman.Map(canvas, gameBoard);
 
 		map.addPlayer(new Bomberman.Player.Human("Bomberman", map));
 		map.addPlayer(new Bomberman.Player.Monster("Dejo", map));

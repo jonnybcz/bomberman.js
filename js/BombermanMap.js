@@ -7,13 +7,20 @@ Bomberman.Map = JAK.ClassMaker.makeClass({
 	VERSION: "1.0"
 });
 
-Bomberman.Map.prototype.$constructor = function(canvas, width, height, cellSize){
+Bomberman.Map.prototype.$constructor = function(canvas, gameBoard){
+	this._gameMapSize = {x: gameBoard.offsetWidth, y: gameBoard.offsetHeight};
 	this._canvas = canvas;
-	this._width = width;
-	this._height = height;
-	this._columns = width / cellSize;
-	this._rows = height / cellSize;
-	this._cellSize = cellSize;
+	this._gameBoard = gameBoard;
+
+	this._width = null;
+	this._height = null;
+	this._cellSize = null;
+	this._columns = null;
+	this._rows = null;
+
+	this._setInitSizeAndColumns();
+	this._setCenterGameWindow();
+	
 	this._gameOver = false;
 
 	this._stones = [];
@@ -25,8 +32,8 @@ Bomberman.Map.prototype.$constructor = function(canvas, width, height, cellSize)
 	this._door = [];
 
 	this._countMonsters = 0;
-	this._canvas.width = width;
-	this._canvas.height = height;
+	this._canvas.width = this._width;
+	this._canvas.height = this._height;
 	
 	this._buildStones();
 	this._buildBoxesAndDoor();
@@ -34,6 +41,50 @@ Bomberman.Map.prototype.$constructor = function(canvas, width, height, cellSize)
 
 	this._render = new Bomberman.Map.Render(this);
 }
+
+/* NOVE FUNKCE */
+Bomberman.Map.prototype._setInitSizeAndColumns = function(){
+	var defaultCellSize = 50; //px
+	var width = Math.ceil(this._gameMapSize.x);
+	var height = Math.ceil(this._gameMapSize.y);
+	var maxWidth = 0;
+	var maxHeight = 0;
+	var columns = 0;
+	var rows = 0;
+		
+	while(width > maxWidth) maxWidth += defaultCellSize;
+	while(height > maxHeight) maxHeight += defaultCellSize;
+
+	maxWidth -= defaultCellSize;
+	maxHeight -= defaultCellSize;
+
+	columns = maxWidth / defaultCellSize;
+	rows = maxHeight / defaultCellSize;
+
+	while(columns % 2){
+		maxWidth -= defaultCellSize;
+		columns = maxWidth / defaultCellSize
+	}
+
+	while(rows % 2){
+		maxHeight -= defaultCellSize;
+		rows = maxHeight / defaultCellSize
+	}
+
+	this._width = maxWidth - defaultCellSize;
+	this._height = maxHeight - defaultCellSize;
+	this._cellSize = defaultCellSize;
+	this._columns = columns;
+	this._rows = rows;
+}
+
+Bomberman.Map.prototype._setCenterGameWindow = function(){
+	this._canvas.style.top = "50%";
+	this._canvas.style.left = "50%";
+	this._canvas.style.marginLeft = this._width / 2 * -1 + "px";
+	this._canvas.style.marginTop = this._height / 2 * -1 + "px";
+}
+/* ****** */ 
 
 Bomberman.Map.prototype.getCanvas = function(){
 	return this._canvas;
