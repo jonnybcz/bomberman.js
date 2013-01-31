@@ -1,3 +1,10 @@
 * 		{ margin: 0; padding: 0;}
+@font-face	{ font-family: FingerPaintRegular; src: url('../fonts/FingerPaint-Regular.ttf') }
 #cns 		{ background: url(../img/textures/grass.png) repeat; }
-#gameOver 	{ position: absolute; font-size: 200%; }
+#game 		{ position: fixed; z-index: 999; top: 50%; left: 50%; margin-left: -511px; margin-top: -273px; }
+
+#win, 
+#gameOver 	{ font-family: FingerPaintRegular; position: absolute; z-index: 1000; font-size: 200%; left: 30%; top: 30%; font-size: 431%; }
+
+#gameOver 	{ color: red; }
+#win 		{ color: yellow; }

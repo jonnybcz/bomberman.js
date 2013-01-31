@@ -112,7 +112,7 @@ Bomberman.Map.Render.prototype._putImageCell = function(x, y, key){
 	var textures = this._textures;
 	var cellSize = this._map.getCellSize();
 	var ctx = this._ctx;
-
+	
 	ctx.drawImage(textures[key], x, y, cellSize, cellSize);
 }
 

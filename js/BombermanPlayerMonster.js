@@ -24,7 +24,7 @@ Bomberman.Player.Monster.prototype.generateMove = function(){
 
 Bomberman.Player.Monster.prototype._setKindOfMonster = function(){
 	var monsters = ["ghost", "spectre", "squid", "swallow", "terror"];
-	var randomNumber = Math.floor(Math.random() * (monsters.length - 1 + 1)) + 1;
+	var randomNumber = Math.floor(Math.random() * (monsters.length - 1 + 1));
 	
 	this._kindMonster = monsters[randomNumber];
 }

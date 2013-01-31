@@ -140,7 +140,7 @@ Bomberman.Map.prototype._win = function(){
 				var doorPos = doors[j].getPosition();
 				
 				if(doorPos.x == playerPos.x && doorPos.y == playerPos.y && countMonsters == 0){
-					console.log("WINNER");
+					JAK.gel("game").appendChild(JAK.mel("div", {innerHTML: "!!! YOU WIN !!!", id: "win"}));
 				}
 			}
 		}
